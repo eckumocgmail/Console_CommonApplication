@@ -1,0 +1,135 @@
+﻿@page
+@model AppModel.Areas.User.Pages.Messages.UserMessagesModel
+@inject UserMessagesService messages
+@{     
+    Layout = "_UserLayout";
+}
+
+<div class="container">
+    <main role="main" class="pb-3">
+
+            
+        <form method="GET" asp-page="/Develop">
+            <div class="container-fluid">
+                <div class="row">
+                    <button class="btn btn-light">загрузить</button>
+                </div>
+                <div class="row">
+                    <script>
+                        function onAudioSearchFormSubmited(){
+                            try{
+                                event.preventDefault();
+                                const queue = document.getElementById('Path').value;
+                                window['https'].
+
+                            }catch(e){
+                                alert(e);
+                            }
+                        }
+                    </script>
+                    <!-- строка поиска -->
+                    <form class="col-12" 
+                          onsubmit="onAudioSearchFormSubmited()">
+
+                        <h3> Аудиозаписи </h3>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Поиск</span>
+                            </div>
+                            <input asp-for="Path" autofocus="true" name="Path" id="Path" type="text" class="form-control" placeholder="search" />                
+                            <div class="input-group-append">
+                                <button class="input-group-text btn btn-primary ">
+                                    выполнить
+                                </button>
+                            </div>
+                        </div>  
+                        
+                    </form>
+
+                </div>
+                <div class="row">
+                    <div class="col-8">
+
+
+                        @if(Model == null)
+                        {
+                            <div class="alert alert-info">Нет данных</div>
+                        }
+                        else
+                        {
+                            @if (Model.View == "Card")
+                            {
+
+
+                                @foreach( var Card in Model.SearchResults)
+                                {
+                                    <div class="card">
+                                        <div class="card-header">
+                                            @Card.Title
+                                        </div>
+                                        <div class="card-body" style="display: none;">
+                                            <h5 class="card-title">@Card.Subtitle</h5>
+                                            <p class="card-text">@Card.Text</p>
+                                            <a href="@Card.Href" class="btn btn-primary">@Card.Link</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+
+                                <div class="d-flex flex-column flex-wrap" style="justify-content: space-around;">
+                                    @foreach(var item in Model.SearchResults)
+                                    {
+                                    
+                                        <div class="btn" 
+                                                style="text-align: left; width: 100%;  margin: 5px; border: 1px solid var(--info)">
+                                            <div class="d-flex flex-row flex-nowrap">                                            
+                                                <div  class="flex-column d-flex flex-nowrap" style="width: 2000px;">
+                                                    <b> @item.Title </b>
+                                                    <div> @item.Subtitle </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }                            
+                        }
+
+                            
+                            
+
+
+                    </div>
+                    <div class="col-4">
+                        <form>
+                            <fieldset disabled>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Disabled input</label>
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Disabled select menu</label>
+                                    <select id="disabledSelect" class="form-control">
+                                    <option>Disabled select</option>
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
+                                    <label class="form-check-label" for="disabledFieldsetCheck">
+                                    Can't check this
+                                    </label>
+                                </div>
+                                <div style="margin: 10px;" align="right">
+                                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                </div>                                
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <br /><br /><br /><br /><br />
+    </main>
+</div>

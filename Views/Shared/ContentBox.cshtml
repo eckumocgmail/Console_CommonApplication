@@ -1,0 +1,98 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MVC
+@model ViewItem
+@inject UserModelsService models
+@inject IComponentRegistry registry
+
+
+@if (Model != null)
+{
+    @try
+    {
+        <div style="display: flex; flex-direction: column; flex-wrap: nowrap;">
+            <div style="width: 100%;">
+                <div style="width: 100%;">
+
+                    @if (Model.Top != null)
+                    {
+                        <partial name="Container" model="@Model.Top" />
+                    }
+                </div>
+            </div>
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: nowrap;">
+                <div style="height: 100%;">
+
+                    @if (Model.Left != null)
+                    {
+                        <partial name="Container" model="@Model.Left" />
+                    }
+                </div>
+                <div style="height: 100%; width: 100%;">
+                    <div id="view-@(models.RegistrateModel(Model))" style="width: 100%; height: 100%;"
+                         onloadstart="@(registry.FindViewComponentFor(Model)+"Controller")">
+                        @if (Model.Visible)
+                        {
+                            @await Component.InvokeAsync(registry.FindViewComponentFor(Model), new
+                            {
+                                Model = Model
+                            })
+                        }
+                    </div>
+                    <div>
+                        @{ Model.ViewInitiallized = true; }
+                    </div>
+                </div>
+                <div style="height: 100%;">
+
+                    @if (Model.Right != null)
+                    {
+                        <partial name="Container" model="@Model.Right" />
+                    }
+                </div>
+
+            </div>
+            <div style="width: 100%;">
+                <div style="width: 100%;">
+
+                    @if (Model.Bottom != null)
+                    {
+                        <partial name="Container" model="@Model.Bottom" />
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    catch (Exception ex)
+    {
+        <div class="alert alert-danger">
+            <h2> Исключение при формировании представления: @Model.GetType().Name @Model.GetContentPath() </h2>
+            <p> @ex.Source </p>
+            <p> @ex.Message </p>
+            @if (ex.HelpLink != null)
+            {
+                <a href="@ex.HelpLink"> справочная инфомация </a>
+            }
+
+            @if (ex.Data != null)
+            {
+                <table>
+                    @foreach (var key in ex.Data.Keys)
+                    {
+                        <tr>
+                            <td>@key</td>
+                            <td>@ex.Data[key]</td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            <div>
+                @ex.StackTrace
+            </div>
+
+        </div>
+    }
+}
+
+
+

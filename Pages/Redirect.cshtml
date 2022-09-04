@@ -1,0 +1,9 @@
+﻿@page
+@model AppModel.Pages.RedirectModel
+@{
+}
+<script>
+    document.location.href='https://@(Model.Provider)/Signin?returnUrl=@(Model.ReturnUrl)';
+
+
+</script>

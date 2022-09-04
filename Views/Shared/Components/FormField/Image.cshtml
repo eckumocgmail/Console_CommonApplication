@@ -1,0 +1,83 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+<script>
+
+    function OnFileChange() {
+        const allFiles = document.getElementById('@Model.GetInputId()').files;
+        if (allFiles.length == 0) {
+            alert('Не выбрано ни одного файла');
+        } else {
+
+            const file = allFiles.item(0);
+            const name = 'Product';
+            const mime = 'image/png';
+            var request = new XMLHttpRequest();
+            request.open('POST', '/File/Upload?modelid=@Model.GetContentPath()', false);
+            request.setRequestHeader('Resource-Name', name);
+            request.setRequestHeader('Mime-Type', mime);
+            request.setRequestHeader('Content-Type', 'multipart/form-data');
+            request.send(file);
+            console.log(file);
+            var uploadResponse = request.responseText;
+            if (request.status == 200) {
+
+                var response = JSON.parse(uploadResponse);
+                console.log('загрузка успешно завершена', response);
+
+                const req = new XMLHttpRequest();
+                req.open('get', '/FormField/CopyData?fieldid=@Model.GetContentPath()&dataid=' + response.hashcode, true);
+                document.getElementById('buttonImageOfPhoto').src = response.url;
+                req.onreadystatechange = function () {
+                    if (req.readyState == 4) {
+                        if (req.status == 200) {
+                            console.log('загрузка успешно завершена');
+
+                        } else {
+                            console.log('загрузка завершена с ошибкой');
+                        }
+                    }
+                }
+                req.send();
+
+
+            } else {
+                console.error('загрузка завершена с ошибкой',request.status + ': ' + request.statusText);
+            }
+
+
+        }
+    }
+</script>
+<div class="input-group">
+    <img class="custom-file-input" style="width: 320px; height: 280px;" id="buttonImageOfPhoto" src="/FormField/Image/@Model.GetContentPath()" />
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Файл</span>
+    </div>
+    <div class="custom-file">
+        <input type="file"
+               id="@Model.GetInputId()"
+               class="custom-file-input"
+               oninput="event.preventDefault(); event.stopPropagation();"
+               onchange="OnFileChange()"
+               name="@Model.GetInputName()">
+        <label class="custom-file-label" for="inputGroupFile01">Выбрать файл</label>
+    </div>
+    <div class="text-info valid-feedback" style="display: block;"
+         id="Help_@Model.GetInputId()">@Model.Help</div>
+        <div class="invalid-feedback"
+             id="Error_@Model.GetInputId()"></div>
+    </div>
+
+
+
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+            document.getElementById('@(Model.GetInputId())').disabled = true;
+            </script>
+        }
+    </div>

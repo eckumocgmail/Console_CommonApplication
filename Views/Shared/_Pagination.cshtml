@@ -1,0 +1,69 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model BookViewModel
+
+<div>
+    @if (Model.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination">
+
+                @if (Model.PageNumber != 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="OnPageNumberChanged" asp-route-page="@(Model.PageNumber-1)">назад</a>
+                    </li>
+                }
+                <div style="width: 100%; overflow-x: hidden; display: flex; flex-direction: row; flex-wrap:  nowrap;">
+                    @if ((Model.PageNumber - 3) > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-action="OnPageNumberChanged" asp-route-page="1"> 1  </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"> ... </a>
+                        </li>
+
+                    }
+                    @for (int pageNumber = Math.Max(1, Model.PageNumber - 3); pageNumber <= Math.Min(Model.TotalPages, Model.PageNumber + 3); pageNumber++)
+                    {
+                        @if (Model.PageNumber == pageNumber)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" asp-action="OnPageNumberChanged" asp-route-page="@pageNumber"> @pageNumber  </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="OnPageNumberChanged" asp-route-page="@pageNumber"> @pageNumber  </a>
+                            </li>
+                        }
+                    }
+                    @if ((Model.PageNumber + 4) < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"> ... </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-action="OnPageNumberChanged" asp-route-page="@Model.TotalPages"> @Model.TotalPages  </a>
+                        </li>
+
+                    }
+                </div>
+
+
+
+                @if (Model.PageNumber != Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link"                           
+                           asp-action="OnPageNumberChanged"
+                           asp-route-page="@(Model.PageNumber+1)">вперёд</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+</div>

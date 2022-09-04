@@ -1,0 +1,125 @@
+﻿@inject APIAuthorization auth
+@inject AuthorizationOptions options 
+@{
+    Layout = "_Layout";
+    if (auth.IsSignin() == false)
+    {
+        ViewContext.HttpContext.Response.Redirect(options.LoginPagePath);    
+    }    
+}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+        <script src="https://www.google.com/recaptcha/api.js" onerror="alert('не загрузить '+this.src)"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">     
+        <partial name="_PageHeader" />
+    </head>
+    <body>   
+
+        <!-- card -->
+        <div class="card">
+            <div class="card-header">
+
+                <div id="notifications-block"></div>
+                <partial name="_Notifications" />
+
+            </div>
+            <div class="card-body" id="CardBody">                
+            </div>
+        </div>
+
+        <!-- container -->
+        <div class="container-fluid" id="ContainerFluid" >
+            <div class="row">
+                <div class="col-3" id="LeftContent"></div>
+                <div class="col-9" id="Content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+        <!-- navlist -->
+        <div id="NavListGroup"  >
+            <h2> Навигация </h2>
+            <style>
+                .list-group-item{
+                    padding: 3px 10px;
+                }
+            </style>
+            <script>
+                function OnNivagationClicked( evt ){
+                    console.log(evt.target);
+                    if( evt.target.getAttribute('name') ){
+                        if(evt.target.getAttribute('name')=='Home')
+                        {
+                            document.location.href='/User/Home';
+                        }
+                        else
+                        {
+                            document.location.href='/User/'+evt.target.getAttribute('name')+'/User'+evt.target.getAttribute('name');
+                        }
+                        
+                    }
+                }
+            </script>
+            <ul class="list-group" onclick="OnNivagationClicked(event)">
+                <li class="list-group-item" id="Home" name="Home"> Домашняя </li>
+                <li class="list-group-item" id="Groups" name="Groups"> Сообщества </li>
+                <li class="list-group-item" id="Messages" name="Messages"> Сообщения </li>
+                <li class="list-group-item" id="Audios" name="Audio"> Аудиозаписи </li>
+                <li class="list-group-item" id="Videos" name="Videos"> Видеозаписи </li>
+                <li class="list-group-item" id="Photos" name="Photos"> Фотографии </li>
+                <li class="list-group-item" id="UserSettings" name="Settings"> Настройки </li>
+                <li class="list-group-item" onclick="location.href='/Signout'; event.preventDefault();"> Выход </li>
+            </ul>
+            <script>
+                try{
+                    let uri = location.href.substr(location.origin.length+1);
+                    uri = uri.substr(uri.indexOf('/'));
+                    if(uri.startsWith('/Home')){
+                        Home.classList.add('active');
+                    }
+                    if(uri.startsWith('/Groups/UserGroups')){
+                        Groups.classList.add('active');
+                    }
+                    if(uri.startsWith('/Settings/UserSettings')){
+                        
+                        UserSettings.classList.add('active');
+                    }
+                    if(uri.startsWith('/Messages/UserMessages')){
+                        Messages.classList.add('active');
+                    }
+                    if(uri.startsWith('/Audio/UserAudio')){
+                        Audios.classList.add('active');
+                    }
+                    if(uri.startsWith('/Videos/UserVideos')){
+                        Videos.classList.add('active');
+                    }
+                    if(uri.startsWith('/Photos/UserPhotos')){
+                        Photos.classList.add('active');
+                    }                             
+                }catch(e){
+                    alert(e);
+                }
+            </script>
+        </div>
+
+       
+     
+        <!-- layout -->
+        <script>           
+         
+            window.addEventListener('load',function(){
+                LeftContent.appendChild(NavListGroup);
+                CardBody.appendChild(ContainerFluid);
+            },true);
+        </script>
+        <partial name="_PageScripts" />
+                       
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>

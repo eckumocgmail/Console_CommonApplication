@@ -1,0 +1,72 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+@{ 
+    ((Select)Model.Control).Edited = true;
+    
+}
+
+
+<div class="input-group mb-3"
+     style="display: flex; flex-direction: row; flex-wrap: nowrap;"
+     id="field-container-@Model.GetInputId()">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="@Model.GetInputName()">
+            <i class="material-icons">@Model.Icon</i>
+        </label>
+    </div>
+    <select class="form-control is-@Model.State"
+            name="@Model.GetInputName()"
+            style="min-width: 220px; height: 40px;"
+            id="@Model.GetInputId()">
+
+        @if (((Select)Model.Control).Options == null || ((Select)Model.Control).Options.Keys == null)
+        {
+            <div class="alert alert-danger">
+                Опции не заданы
+            </div>
+        }
+        else
+        {
+            @if (Model.Value != null && ((Select)Model.Control).Options.Keys.Contains(Model.Value))
+            {
+                @foreach (var option in ((Select)Model.Control).Options)
+                {
+                    @if (option.Key.ToString() == Model.Value.ToString())
+                    {
+                        <option value="@option.Key" selected>@option.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                }
+            }
+            else
+            {
+                <option selected> ... </option>
+                @foreach (var option in ((Select)Model.Control).Options)
+                {
+                    <option value="@option.Key">@option.Value</option>
+                }
+            }
+        }
+
+
+    </select>
+
+</div>
+<div class="text-info valid-feedback" style="display: block;"
+     id="Help_@Model.GetInputId()">@Model.Help</div>
+    <div class="invalid-feedback"
+         id="Error_@Model.GetInputId()">
+
+    </div>
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+                document.getElementById('@(Model.GetInputId())').disabled = false;
+            </script>
+        }
+    </div>

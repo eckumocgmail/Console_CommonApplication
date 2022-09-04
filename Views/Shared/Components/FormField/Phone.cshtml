@@ -1,0 +1,64 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+<div class="input-group mb-3"
+     id="field-container-@Model.GetInputId()">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="@Model.GetInputName()">
+            <i class="material-icons">@Model.Icon</i>
+        </label>
+    </div>
+    <input type="text"
+           value="@Model.Value"
+           name="@Model.GetInputName()"
+           id="@Model.GetInputId()"
+           style="height: 38px;"
+           class="form-control is-@Model.State" />
+
+    <div class="text-info valid-feedback" style="display: block;"
+         id="Help_@Model.GetInputId()">@Model.Help</div>
+        <div class="invalid-feedback"
+             id="Error_@Model.GetInputId()"></div>
+    </div>
+
+
+    <script>
+
+    var temp = document.getElementById('@Model.GetInputId()').value;
+    function onTelInput(evt) {
+
+        try {
+            console.log(evt);
+
+            var s = '';
+            var v = evt.target.value;
+            for (let i = 0; i < v.length; i++) {
+                if ("0123456789-".indexOf(v[i]) != -1) {
+                    s += v[i];
+                    if (s.length > 13) {
+                        break;
+                    }
+                }
+
+            }
+            if (s.length > 1 && s[1] != '-') s = s.substring(0, 1) + '-' + s.substring(1)
+            if (s.length > 4 && s[5] != '-') s = s.substring(0, 5) + '-' + s.substring(5)
+            if (s.length > 8 && s[9] != '-') s = s.substring(0, 9) + '-' + s.substring(9)
+            v = s;
+            if (v.endsWith('-')) v = v.substring(0, v.length - 1);
+            document.getElementById('@Model.GetInputId()').value = v;
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    document.getElementById('@Model.GetInputId()').addEventListener('input', onTelInput);
+    </script>
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+            document.getElementById('@(Model.GetInputId())').disabled = true;
+            </script>
+        }
+    </div>

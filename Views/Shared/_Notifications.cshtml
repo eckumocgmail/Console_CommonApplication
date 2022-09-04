@@ -1,0 +1,21 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@inject IUserNotificationsService notifications
+<div id="notifications-block">
+    @foreach (var alert in notifications.Take())
+    {
+        <div class="alert alert-@alert.Type">
+            <div>@alert.Title</div>
+            @if (alert.Summary != null)
+            {
+                <p>@alert.Summary</p>
+            }
+            @if (alert.URL != null)
+            {
+                <div>
+                    <a href="@alert.URL">alert.URL</a>
+                </div>
+            }
+        </div>
+    }
+</div>

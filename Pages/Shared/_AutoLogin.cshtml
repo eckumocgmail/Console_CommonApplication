@@ -1,0 +1,17 @@
+﻿@inject APIAuthorization authorization
+@try
+{
+   @if(authorization.IsSignin()==false)
+    {
+        @if(authorization.HasUserWithEmail("eckumoc@gmail.com")==false)
+        {
+            @authorization.Signup("eckumoc@gmail.com","eckumoc@gmail.com","eckumoc@gmail.com");
+        }
+        @authorization.Signin("eckumoc@gmail.com","eckumoc@gmail.com")
+    
+    } 
+}catch(System.Exception ex)
+{
+    <div class="alert alert-danger">@ex.Message</div>
+    <div class="alert alert-danger">@ex.StackTrace</div>
+}

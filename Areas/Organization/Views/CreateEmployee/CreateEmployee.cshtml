@@ -1,0 +1,88 @@
+﻿@using AuthorizationMVC
+@using AuthorizationMVC.Views.Registration
+@model Employee
+@{
+    ViewData["Title"] = "Регистрация пользователя";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <div layout="column" ng-cloak>
+
+
+        <md-content layout-padding class="front-pane content-box"
+                    style="text-align: left; width: 360px; padding: 25px;">
+            <form name="projectForm">
+
+                <h2>Сотрудник</h2>
+                <div style="width: 100%;">
+                    <md-input-container style="width: 100%;">
+                        <label>Подразделение</label>
+                        <md-select name="type" ng-model="project.type" required style="width: 100%;">
+                            @inject ManagmentDataModel db
+                            @foreach (var dep in db.Departments)
+                            {
+                                <md-option value="@dep.ID">@dep.Name</md-option>
+                            }
+
+                        </md-select>
+                        <div ng-messages="projectForm.type.$error">
+                            <div ng-message="required">Выберите подразделение</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div style="width: 100%;">
+                    <md-input-container style="width: 100%;">
+                        <label>Имя</label>
+                        <input required name="Employee.Name" ng-model="Employee.Name"
+                               style="width: 100%;">
+                        <div ng-messages="projectForm.clientName.$error">
+                            <div ng-message="required">Обязательное поле</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div style="width: 100%;">
+                    <md-input-container style="width: 100%;">
+                        <label>Фамилия</label>
+                        <input required name="Employee.SurName" ng-model="Employee.SurName"
+                               style="width: 100%;">
+                        <div ng-messages="projectForm.clientName.$error">
+                            <div ng-message="required">Обязательное поле</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div style="width: 100%;">
+                    <md-input-container style="width: 100%;">
+                        <label>Отчество</label>
+                        <input required name="Employee.LastName" ng-model="Employee.LastName"
+                               style="width: 100%;">
+                        <div ng-messages="projectForm.clientName.$error">
+                            <div ng-message="required">Обязательное поле</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div style="width: 100%;">
+
+                    <md-input-container>
+
+                        <md-datepicker ng-model="Employee.Birthday"
+                                       style="width: 100%;"
+                                       md-current-view="year"
+                                       md-placeholder="Дата рождения"></md-datepicker>
+
+                        <div ng-messages="Employee.Birthday.$error">
+                            <div ng-message="required">Обязательное поле</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div align="right">
+                    <button type="submit" class="btn btn-warn">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Далее</button>
+                </div>
+
+            </form>
+        </md-content>
+
+    </div>
+</div>

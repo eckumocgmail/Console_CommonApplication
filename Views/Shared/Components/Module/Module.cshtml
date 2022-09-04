@@ -1,0 +1,19 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model IEnumerable<string>
+<div>
+    <h2>Шаблоны</h2>
+    <ul>
+        <li id="ListGroupTemplate">
+            <ul class="list-group">
+                @foreach(string line in Model)
+                {
+                    <li class="list-group-item" onmouseleave="this.classlist.remove('active')" onmouseover="this.classlist.add('active')">
+                        @line
+                    </li>    
+                }                
+            </ul>
+        </li>
+    </ul>
+
+</div>

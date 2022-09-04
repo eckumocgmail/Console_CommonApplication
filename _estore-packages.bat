@@ -1,0 +1,19 @@
+
+dotnet add package Microsoft.AspNetCore.Mvc -v 2.2.0
+dotnet add package Microsoft.AspNetCore.Mvc.Razor -v 2.2.0
+dotnet add package Microsoft.AspNetCore.Mvc.Razor.Extensions -v 5.0.17
+dotnet add package Microsoft.AspNetCore.SignalR -v 1.1.0
+dotnet add package Microsoft.AspNetCore.SignalR.Client -v 5.0.16
+dotnet add package Microsoft.AspNetCore.Hosting -v 2.2.7
+dotnet add package Microsoft.AspNetCore.SpaServices -v 3.1.24
+dotnet add package Microsoft.AspNetCore.SpaServices.Extensions -v 5.0.16
+dotnet add package Microsoft.AspNetCore.TestHost -v 5.0.17
+dotnet add package Microsoft.EntityFrameworkCore -v 3.1.14   
+dotnet add package Microsoft.EntityFrameworkCore.InMemory -v 3.1.14   
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite -v 3.1.14
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 3.1.14
+dotnet add package Newtonsoft.Json -v 13.0.1
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL -v 3.1.11
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL.Design -v 1.1.0
+dotnet add package Oracle.EntityFrameworkCore -v 3.19.110
+dotnet add package Pomelo.EntityFrameworkCore.MySql -v 3.2.4

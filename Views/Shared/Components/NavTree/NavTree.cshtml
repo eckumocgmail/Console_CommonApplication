@@ -1,0 +1,60 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model ILink
+
+
+<incolumn style="height: 100%; width: 100%;"
+          id="tree-container-@Model.GetHashCode()"
+          ondragstart="event.dataTransfer.setData('text', event.target.id);"
+          oncontextmenu="event.preventDefault()"
+          draggable="true">
+    
+    <div onmouseenter="if (document.getElementById('mdListId-@Model.GetHashCode()').classList.contains('expanded') == false) { event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetHashCode()', (resp) => { const e = document.getElementById('view-@Model.GetHashCode()'); e.innerHTML = resp; $app.$compile(e)($app.$scope); }) }"></div>
+    <div class="@(Model.IsActive? "selected": "")"
+         id="tree-@Model.GetHashCode()"
+         ondragover="event.preventDefault()"
+         ondrop="event.preventDefault(); var data = event.dataTransfer.getData('text'); alert(data); const e = document.getElementById(data); if (!e) alert('Не найден перетаскиваемый узел'); event.target.appendChild(e);">
+        <div id="mdListId-@Model.GetHashCode()">
+            <inline align="left">
+                <inline style="width: 100%; flex-direction: row; display: flex; flex-wrap: nowrap;">
+                    <span class="material-icons" style="width: 30px;">@Model.Icon</span>
+                    <span style="word-break: keep-all; width: 100%;"
+                          onclick="document.location='@Model.Href'">
+                        @Model.Label
+                    </span>
+                    <span>
+                        @if (Model.ChildLinks.Count() > 0)
+                        {
+                            @if (Model.IsActive)
+                            {
+
+                                <i class="material-icons md-secondary md-hue-3"
+                                   style="justify-self: flex-end; margin-left: auto; width: 20px;"
+                                   onclick="event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetHashCode()', (resp) => { const e = document.getElementById('view-@Model.GetHashCode()'); e.innerHTML = resp; $app.$compile(e)($app.$scope); })">expand_more</i>
+                            }
+                            else
+                            {
+                                <i class="material-icons md-secondary md-hue-3"
+                                   style="justify-self: flex-end; margin-left: auto; width: 20px;"
+                                   onclick="event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetHashCode()', (resp) => { const e = document.getElementById('view-@Model.GetHashCode()'); e.innerHTML=resp; $app.$compile(e)($app.$scope); })">chevron_right</i>
+                            }
+
+                        }
+                    </span>
+                </inline>
+
+
+                
+            </inline>
+        </div>
+        <div style="padding-left: 20px;">
+            @if (true)
+            {
+                @foreach (var pchild in Model.ChildLinks)
+                {
+                    <vc:nav-tree model="@pchild"></vc:nav-tree>
+                }
+            }
+        </div>
+    </div>
+</incolumn>

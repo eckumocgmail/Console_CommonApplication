@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@inject APIAuthorization auth
+
+@inject APIUsers users
+<h2>Пользователи</h2>
+<ul class="list-group">
+    @foreach(UserApi user in users.GetAll())
+    {
+        <li class="list-group-item">@(user.Account.Email)</li>
+    }
+</ul><hr />
+
+@inject APIServices services
+<h2>Сервисы</h2>
+<ul class="list-group">
+    @foreach(Service user in services.GetAll())
+    {
+        <li class="list-group-item">@(user.Name)</li>
+    }
+</ul>

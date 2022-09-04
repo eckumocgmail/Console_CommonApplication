@@ -1,0 +1,32 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model System.Data.DataTable
+@try
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (System.Data.DataColumn column in Model.Columns)
+                {
+                    <th>@column.Caption</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (System.Data.DataColumn column in Model.Columns)
+                    {
+                        <th>@row[column.ColumnName]</th>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+catch (Exception ex)
+{
+    <p class="text-danger">@ex.Message</p>
+    @ex.StackTrace
+}

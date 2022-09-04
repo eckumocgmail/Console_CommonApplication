@@ -1,0 +1,30 @@
+﻿@page
+@model AppModel.Areas.User.Pages.HomeModel
+@{     
+    Layout = "_UserLayout";
+}
+@inject APIAuthorization auth
+Home
+
+<div>
+    @if(auth.IsSignin())
+    {
+        @(await Component.InvokeAsync("Form",(new Form(auth.Verify().Person))))
+    }
+</div>
+
+
+
+<div class="card" style="background-image: url('/bg.jpg')">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <img src="/universal.png" />
+
+    <!--<img src="/red-logo.png" />-->
+    <a href="#" class="btn btn-primary">Go to universal</a>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+﻿@page
+@model AppModel.Areas.User.Pages.Settings.UserSettingsModel
+@{     
+    Layout = "_UserLayout";
+}
+@inject APIAuthorization auth
+
+
+@if(auth.IsSignin())
+{
+    @(await Component.InvokeAsync("Form",(new Form(auth.Verify().Settings){ Method = "post"})))
+}

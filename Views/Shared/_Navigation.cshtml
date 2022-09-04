@@ -1,0 +1,87 @@
+﻿@addTagHelper *, AngularApplication
+@inject APIAuthorization auth
+
+<style>
+    .menu-container {
+  
+        padding-left: 10px;
+        padding-right: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .menu-container *:any-link,
+    .menu-container *:visited{
+        background-color: white;
+        color: black;
+    }
+    .menu-container * {
+        margin-left: 2px;
+        margin-right: 2px;
+    
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+
+
+<div class="front-pane init" onmessage="alert(event)">    
+    <div class="menu-container">
+
+        <span class="material-icons"
+               id="MenuButton"
+              onclick=" this.dispatchEvent(new MessageEvent('side', { icon: 'menu' } ))"
+              style="display: inline-block; width: 50px;" ng-clock>
+            menu
+        </span>
+        <a id="AHomeIndex" class="text-dark"  href="/User/Home">
+            Главная
+        </a>
+
+
+        @if (auth.IsSignin())
+        {
+            
+                
+            
+            <a id="Signout" class="text-dark" asp-page="/Signout">Выход</a>
+            <!--<a id="ALogout" class="text-dark" asp-area="" asp-controller="Logout" asp-action="Get">Выход</a>-->
+        }
+        else
+        {
+            <a id="ARegistration" class="text-dark" href="/Signup">Регистрация</a>
+            <a id="ALogin" class="text-dark"  href="/Signin">Авторизация</a>
+        }
+
+        <a class="text-dark" id="AHomeAbout" asp-area="" asp-controller="Home" asp-action="About">О программе</a>
+
+    </div>
+
+    <script>
+        (function () {
+            const route = {
+                constroller: '@ViewContext.RouteData.Values["controller"]',
+                action: '@ViewContext.RouteData.Values["action"]'
+            };
+            console.log(route);
+            
+            const aid = (route.action == 'Get' || route.action == 'Post') ?
+                ('A' + route.constroller) :
+                ('A' + route.constroller + route.action);
+            const a = document.getElementById(aid);            
+            if (a) {
+                a.classList.add('bg-primary');
+                a.style.borderRadius = '5px';
+                a.classList.remove('text-dark');
+                a.style.color = 'white';
+            }
+            let b = document.querySelector('a[href="' + location.href.substring(location.origin.length) + '"]');
+            if (b) {
+                b.classList.add('bg-primary');
+                b.style.borderRadius = '5px';
+                b.classList.remove('text-dark');
+                b.style.color = 'white';
+            }
+        })();
+    </script>
+</div>

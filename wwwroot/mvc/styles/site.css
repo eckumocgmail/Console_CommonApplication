@@ -1,0 +1,27 @@
+﻿* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+html, body{
+    height: 100%;
+    margin: auto;
+}
+.material-icons {
+    animation-duration: 1000ms;
+    animation-name: opear;
+    width: 100%;
+    height: 100%;
+}
+.fline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.fcol {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}

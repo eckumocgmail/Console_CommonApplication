@@ -1,0 +1,26 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using ReCaptcha
+@inject AuthorizationOptions auth
+@inject ReCaptchaOptions recaptcha
+<div>
+    @if (auth.EnableRecaptcha)
+    {
+
+        <div>
+            <div class="input-group" id="recaptchaInputGroup">
+                <div class="g-recaptcha" data-sitekey="@recaptcha.SiteKey"></div>
+            </div>
+            @if (ViewData["State"] != null && ((ModelStateDictionary)(ViewData["State"])).ContainsKey("g-Recaptcha-Response"))
+            {
+                @foreach (var error in ((ModelStateDictionary)(ViewData["State"]))["g-Recaptcha-Response"].Errors)
+                {
+                    <span class="text-danger">@error.ErrorMessage</span>                    
+                }
+            }
+
+        </div>
+    }
+</div>

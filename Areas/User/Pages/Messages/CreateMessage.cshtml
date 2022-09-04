@@ -1,0 +1,14 @@
+﻿@page
+@model AppModel.Areas.User.Pages.Messages.CreateMessageModel
+@{     
+    Layout = "_UserLayout";
+}
+@inject APIUsers users
+<div>
+    <h2>Новое сообщение</h2>
+    @foreach( UserApi user in users.GetAll())
+    {
+        <p>@(user.Account.Email)</p>
+    }
+    <partial name="Container" model="@(new Form(Model.Input))" />
+</div>

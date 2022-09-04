@@ -1,0 +1,63 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+
+@model object
+@inject UserModelsService models
+@inject IComponentRegistry registry
+
+@{
+    if(Layout != "_Layout"){
+         Layout = "_Layout";
+    }
+  //  models.RegistrateModel(Model);
+   // models.RegistrateModel(Model.GetContextMenu());
+    
+}
+
+@if (Model != null)
+{
+
+
+
+
+
+        <div style="display: flex; flex-direction: column; flex-wrap: nowrap;">
+            <div style="width: 100%;">
+                <div style="width: 100%;">
+                </div>
+            </div>
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: nowrap;">
+                <div style="height: 100%;">
+                    
+                </div>
+                <div style="height: 100%; width: 100%;">
+                    <div id="view-@(Model.GetHashCode())" style="width: 100%; height: 100%;"
+                         class="init"                                                  
+                         onmousewheel="console.log(event)"
+                         oncontextmenu="console.log(event)">
+
+
+                            @await Component.InvokeAsync(registry.FindViewComponentFor(Model), new
+                            {
+                                Model = Model
+                            })
+
+
+                    </div>
+
+                    <div>
+                    </div>
+                </div>
+                <div style="height: 100%;">
+                </div>
+
+            </div>
+            <div style="width: 100%;">
+                <div style="width: 100%;">
+                </div>
+            </div>
+        </div>
+}
+
+
+

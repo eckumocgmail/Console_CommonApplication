@@ -1,0 +1,61 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+ 
+<script>
+    const route = {
+        area: '@ViewContext.RouteData.Values["area"].ToString()',
+        constroller: '@ViewContext.RouteData.Values["controller"].ToString()',
+        action: '@ViewContext.RouteData.Values["action"].ToString()'
+    };
+    const prefix = (route.area == '' || !route.area) ? ('/' + route.constroller) :
+        ('/' + route.area + '/' + route.constroller);
+   
+
+
+
+    /**
+     * События выполнение поискового запроса    
+     */
+    function onSearch(evt) {
+        console.log(evt);
+        try {
+            document.location.href = prefix + '/OnSearchQueryChanged?SearchQuery=' + evt
+
+        } catch (e) {
+            console.error(e);
+            alert(e);
+        }
+    }
+
+
+
+
+    /**
+     * События ввода в поисковую строку     
+     */
+    function onInput(evt, callback) {
+        console.log(evt);
+        try {
+            const req = new XMLHttpRequest();
+            req.open('post', prefix + '/OnInput?SearchQuery=' + evt.target.value, true);
+            req.onreadystatechange = function () {
+                if (req.readyState == 4) {
+                    if (req.status != 200) {
+                        alert(req.status + ':' + req.responseText);
+                        console.error();
+                    } else {
+                        if (callback) {
+                            const response = JSON.parse(req.responseText);
+                            callback(response);
+                        }
+                    }
+                }
+            }
+            req.send();
+
+        } catch (e) {
+            console.error(e);
+            alert(e);
+        }
+    }
+
+</script>

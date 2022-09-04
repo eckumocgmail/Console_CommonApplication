@@ -1,0 +1,12 @@
+﻿@model TestReport
+
+
+<div>
+    <div>@($"[{(Model.Failed?"-":"+")}]"+Model.Name)</div>
+    <div style="padding-left: 20px;">
+        @foreach( var sub in Model.Subreports.Values)
+        {
+            <partial name="Report" model="@sub"/>
+        }
+    </div>
+</div>

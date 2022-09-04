@@ -1,0 +1,59 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@using AuthorizationMVC 
+@model IDictionary<string, string>
+@{
+    if (Layout == null)
+    {
+    Layout = "_Layout";    
+    }
+    
+    var arr = Model==null? null: Model.ToArray();
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">Модель не определена</div>
+}
+else
+{
+    <div>
+        <div>
+            <md-button>добавить</md-button>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 55px;">#</th>
+                    <th scope="col" style="width: 225px;">Наименование</th>
+                    <th scope="col">Значение</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@arr[i].Key</td>
+                        <td>
+                             
+                            @*foreach(string line in arr[i].Value.Split("\n"))
+                            {
+                                
+                                @foreach(string word in line.Split(" "))
+                                {
+                                    <text>&nbsp;@word</text>
+                                }
+                                <br/>
+                            }*@
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

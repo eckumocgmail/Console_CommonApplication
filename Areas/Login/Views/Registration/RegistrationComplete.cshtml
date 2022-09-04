@@ -1,0 +1,13 @@
+﻿@using AuthorizationMVC
+@using AuthorizationMVC.Views.Registration
+@model RegistrationModel
+@{
+    ViewData["Title"] = "Регистрация пользователя";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center front-pane init" style="padding: 20px;">
+    <h1 class="display-4">Регистрация завершена</h1>
+    <p>На вашу электронную почту отправлено письмо с ссылкой для активации учетной записи.</p>
+    <div><a asp-controller="Home" asp-action="Index">На страницу авторизации</a></div>
+</div>

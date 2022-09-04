@@ -1,0 +1,17 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model Select
+
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">@Model.</label>
+    </div>
+    <select class="custom-select" id="inputGroupSelect01">
+        @foreach (var option in Model.Options)
+        {
+            <option value="@option.Key">@option.Value</option>
+        }
+        <option selected>Выбор из списка</option>
+    </select>
+</div>

@@ -1,0 +1,11 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+
+@foreach (var property in (dynamic)(Model.Value))
+{
+    @foreach (var token in Newtonsoft.Json.Linq.JObject.FromObject(property))
+    {
+        @token
+    }
+}

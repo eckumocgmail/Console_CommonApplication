@@ -1,0 +1,278 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+
+@inject APIAuthorization auth
+@if(auth.IsSignin())
+{
+    @(ViewData["ColorTheme"] = @auth.Verify().Settings.ColorTheme)
+    
+}
+@if (HttpUtils.IsPartialRequest(ViewContext) == false)
+{
+
+     
+<!DOCTYPE html>
+<html lang="en"  >
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script> 
+            const started = new Date().getTime();
+        </script>
+        <!-- angularjs -->
+        <script src="~/lib/angular.min.js" onerror="alert(this.src);"></script>
+        <script src="~/lib/angular-route.min.js" onerror="alert(this.src);"></script>
+        <script src="~/lib/angular-animate.min.js" onerror="alert(this.src);"></script>
+        <script src="~/lib/angular-aria.min.js" onerror="alert(this.src);"></script>
+        <script src="~/lib/angular-messages.min.js" onerror="alert(this.src);"></script>
+        <script src="~/lib/angular-material.min.js" onerror="alert(this.src);"></script>
+
+        <!-- signalr -->
+        <script src="~/lib/signalr.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <!-- title -->
+        <title> @ViewData["Title"] </title>
+
+        @if (ViewData.ContainsKey("ColorTheme"))
+        {
+            <link href="~/css/theme/@(ViewData["ColorTheme"].ToString().ToKebabStyle()).css" rel="stylesheet" onerror="alert(this.href)">    
+        }
+        
+
+        <!-- reset -->
+        <link rel="stylesheet" href="~/mvc/styles/reset.css" onerror="alert('не загрузить '+this.href)" />
+
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+
+        <!-- google recaptcha -->
+        <script src="https://www.google.com/recaptcha/api.js" onerror="alert('не загрузить '+this.src)"></script>
+
+        <!-- bootstrap styles -->
+       
+        <!-- angular-material styles -->
+        <link rel="stylesheet" href="/lib/angular-material.min.css" onerror="alert(this.href)" />
+
+        <!-- application styles -->
+        <link rel="stylesheet" href="~/mvc/styles/form.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/pane.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/raiting.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/site.css" onerror="alert('не загрузить '+this.href)" />
+
+        <!-- animations -->
+        <link rel="stylesheet" href="~/mvc/animations/fullsize.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/animations/highlight.css" onerror="alert('не загрузить '+this.href)" />
+ 
+            
+        <!-- highcharts scripts 
+        <script src="~/lib/highcharts.js" onerror="alert('не загрузить '+this.src)"></script>       
+         -->
+
+        <!-- signalr -->
+        <script src="~/lib/signalr.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <!-- jquery -->
+        <script src="~/lib/jquery.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/jquery.validate.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/additional-methods.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/jquery.validate.unobtrusive.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <!-- bootstrap 
+        <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>        
+-->
+        <!-- signalr -->
+        <script src="~/lib/signalr.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <!-- jquery 
+        <script src="~/lib/jquery.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/jquery.validate.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/additional-methods.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/lib/jquery.validate.unobtrusive.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+-->
+        <!-- bootstrap
+        <script src="~/lib/bootstrap.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+ -->
+
+  
+         <script src="~/js/http.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/descriptor.function.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/description.function.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/input-context.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/specification.function.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/file-exts.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/control-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/validators/text-length-validators.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/validators/text-validators.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/validators.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/number-validators.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/doc-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/data-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/structure-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/input-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/property-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/image-types.const.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/app.icons.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/annotations/annotations.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/site.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/$mutations.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/eval-queue.service.js" onerror="alert('не загрузить '+this.src)"></script>
+
+        <script src="~/js/platform/mvc.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/platform/application.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/platform/filter.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/platform/service.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/platform/controller.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/platform/component.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/shared/component.prototype.js" onerror="alert('не загрузить '+this.src)"></script>
+
+        
+        <script src="~/js/progress.controller.js" onerror="alert(this.src);"></script>
+        <script src="~/js/json-seriallization.service.js" onerror="alert(this.src);"></script>
+        <script src="~/js/app-dialog.service.js" onerror="alert(this.src);"></script>
+        <script src="~/mvc/app.component.js" onerror="alert(this.src);"></script>
+        <script src="~/mvc/app-https.service.js" onerror="alert(this.src);"></script>
+        <script src="~/mvc/app-client.service.js" onerror="alert(this.src);"></script>
+        <script src="~/mvc/app.global-events.service.js" onerror="alert(this.src);"></script>
+ 
+        <script src="~/js/eval-queue.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+
+
+        <script src="~/js/$chart.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/invoke-procedure.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/forms-input.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/http-methods.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/mouse-focus.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/search-input.directive.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/data-editor.component.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/entity-editor.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/entity-repository.http-fasade.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/entity-repository.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/entity-repository.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/request-message.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/response-message.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/datasource/fasade/webapi-fasade.interface.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/shared/css-converter.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/application.db-context.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/signalr-client.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-dialog.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-help.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/application.data-model.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/application-controllers.context.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-on.directive.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-resource.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-root.controller.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-router.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/app-transport.service.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/js/main.onloaded.js" asp-append-version="true" onerror="alert('не загрузить '+this.src)"></script>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+
+    </head>
+    <body  >
+
+
+        <!-- Макет главной станице -->
+        <div ng-app="AppModel" ng-controller="AppCtrl" id="PageLayout" style="width: 100%; height: 100%; position: static;">
+
+
+            
+
+            <div class='view' style="width: 100%; height: 100%; position: static;">
+
+                <!-- режиа анимации прогресса выполнения -->
+                <div id='when-progress' style="width: 100%; height: 100%; position: static; display: none;">
+
+
+                    <partial name="_Progress" />
+                </div>
+
+                <!-- режим ожидания действий со стороны пользователя-->
+                <div id='when-wait' style="width: 100%; height: 100%; position: static;">
+
+
+                    <div style="width: 100%; height: 100%; display: flex; flex-direction: row; flex-wrap: nowrap; overflow-y:auto;">
+                        <div id="sideLeft"
+                             class="front-pane init"
+                             on-mouseleave="this.dispatchEvent(new MessageEvent('side'));"
+                             style="overflow-y: auto; word-break: break-word; width: 420px; height: 100%; display: flex; flex-direction: column;  ">
+
+
+                            
+                             
+                            <partial name="_AreaNavigation" />
+                             
+
+
+
+                        </div>
+                        <div style="background-color: white; overflow-y: auto; width: 100%; height: 100%; display: flex; flex-direction: column; flex-wrap: nowrap;">
+                            <div style="overflow-y: auto; padding: 5px; width: 100%; height: 100%; display: flex; flex-direction: column; flex-wrap: nowrap; ">
+                                <div style="width: 100%; ">
+                                
+                                    <partial name="_Navigation" />
+                                    <partial name="_Notifications" />
+
+                                </div>
+                                
+
+                                <div style="width: 100%; height: 100%;" id="content-pane">
+                           
+                                    @RenderBody()
+                                </div>
+                                <div style="width: 100%; height: 100%;" id="progress-pane" align="center">
+                                    <!-- CSS only -->
+
+                                    <div class="spinner-border" role="status" style="border-width: 35px; width: 320px; height: 320px">
+                                            <span class="sr-only">Пожалуйста подождите</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+      
+                   
+            <!-- angularjs -->
+            <script src="~/lib/angular-animate.min.js" onerror="alert(this.src);"></script>
+            <script src="~/lib/angular-aria.min.js" onerror="alert(this.src);"></script>
+            <script src="~/lib/angular-messages.min.js" onerror="alert(this.src);"></script>
+            <script src="~/lib/angular-material.min.js" onerror="alert(this.src);"></script>
+            <!--<script src="~/lib/angular-material-mocks.js" onerror="alert(this.src);"></script>-->
+
+           
+            <!-- jquery 
+            <script src="~/lib/jquery.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/lib/jquery.validate.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/lib/additional-methods.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/lib/jquery.validate.unobtrusive.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            -->
+            <!-- bootstrap
+            <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>        
+             -->
+            <script src="~/mvc/my-http-client.service.js" onerror="alert(this.src);"></script>
+        
+            
+            <script src="~/mvc/site.js" onerror="alert(this.src);"></script>
+
+            <script> 
+                console.log(new Date().getTime()-started);
+                window.addEventListener('load',function(){
+                    document.body.addEventListener('side',function(){
+                        document.getElementById('sideLeft').hidden = document.getElementById('sideLeft').hidden? false: true;
+                    }, true);
+                }, true);
+            </script>
+            @await RenderSectionAsync("Scripts", required: false)
+        </div>
+    </body>
+</html>
+}

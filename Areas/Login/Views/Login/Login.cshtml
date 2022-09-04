@@ -1,0 +1,131 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MVC
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@{
+    if (ViewContext.HttpContext.Request.Headers.ContainsKey("ajax") == false)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+}
+
+@model LoginModel
+@inject APIAuthorization auth
+@if (auth.IsSignin() == false)
+{
+    @try
+    {
+        <p>@auth.Signin("eckumocuk@gmail.com", "eckumocuk@gmail.com").Account.Email</p>
+        <script>document.location.href = location.origin + "/Home/Index"</script>
+    }
+    catch (Exception ex)
+    {
+        <div class="alert alert-danger">@ex.ToString()</div>
+    }
+
+
+}
+else
+{
+    <script>document.location.href = location.origin + "/Home/Index"</script>
+}
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">Модель не опрелена</div>
+}
+else
+{
+
+    <div id="p@(ViewUtils.GetControllerName(ViewContext))"
+         style="padding: 20px;" align="center">
+        <!-- Вспомогательные функции -->
+        <script>
+            function setPlaceholderFor(propertyName) {
+                document.getElementById(propertyName + "Input").placeholder =
+                    document.getElementById(propertyName + "Label").innerHTML;
+            }
+            function setValidationStateFor(propertyName, validationState) {
+
+                document.getElementById(propertyName + "Input").classList.add("is-" + validationState);
+            }
+        </script>
+
+
+        <style>
+            .card-1 {
+                padding: 20px;
+                border: 1px solid rgba(0,0,0,0.22);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            }
+
+                .card-1:hover {
+                    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                }
+        </style>
+
+
+
+
+
+        <form asp-antiforgery="true"
+              class="card-1 init"
+              style="width: 640px; text-align: left"
+              align="left"
+              ng-submit="$progress.start()">
+
+
+
+
+            <h2 class="display-4"> Авторизация </h2>
+
+            <div><span class="text-danger"> @Model.ErrorMessage </span></div><br />
+            <div style="text-indent: 25px; width: 100%;"
+                 print-text="Если вы зарегистрированы на нашем ресурсе введите учётные данные указанные при регистрации,
+            если нет, то предлагаю Вам перейти в раздел регистрации.">
+            </div>
+
+            <div asp-validation-summary="All" class="text text-danger"></div>
+
+
+            <!-- Email -->
+            <label asp-for="Email" id="EmailLabel"></label>
+            <div class="input-group">
+                <input asp-for="Email"
+                       class="form-control is-@ViewData["EmailValidationState"]"
+                       id="EmailInput">
+                <script>setPlaceholderFor("Email");</script>
+            </div>
+            <div>
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div><br />
+
+            <!-- Password -->
+            <label asp-for="Password" id="PasswordLabel"></label>
+            <div class="input-group">
+
+                <input asp-for="Password"
+                       class="form-control is-@ViewData["PasswordValidationState"]"
+                       id="PasswordInput">
+                <script>setPlaceholderFor("Password");</script>
+            </div>
+            <div>
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div><br />
+
+
+
+            <partial name="_ReCaptcha" />
+
+
+
+            <div><a asp-controller="Registration" asp-action="Get">У меня нет учетной записи</a></div>
+            <div><a asp-controller="Restore" asp-action="Get">Я не помню пароль</a></div>
+
+
+            <button class="btn btn-primary" type="submit"> Вход </button>
+        </form>
+
+    </div>
+}

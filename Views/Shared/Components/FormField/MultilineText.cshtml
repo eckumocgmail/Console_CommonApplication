@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+<incolumn>
+   <!-- <div>
+        <i class="material-icons">format_align_left</i>
+        <i class="material-icons">format_align_justify</i>
+        <i class="material-icons">format_align_right</i>
+        <i class="material-icons">format_bold</i>
+        <i class="material-icons">format_italic</i>
+        <i class="material-icons">format_color_text</i>
+        <i class="material-icons">format_line_</i>
+        <i class="material-icons">format_list_bulleted</i>
+        <i class="material-icons">format_list_numbered</i>
+        <i class="material-icons">format_strikethrough</i>
+        <i class="material-icons">format_size</i>
+    </div>-->
+    <div class="input-group mb-3" 
+         id="field-container-@Model.GetInputId()">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="@Model.GetInputName()">
+                <i class="material-icons">@Model.Icon</i>
+            </label>
+        </div>
+
+        <textarea class="form-control is-@Model.State"
+                    style="min-height: 225px;"
+                    name="@Model.GetInputName()"
+                    id="@Model.GetInputId()">@Model.Value</textarea>
+        <div class="text-info valid-feedback" style="display: block;" 
+                id="Help_@Model.GetInputId()">@Model.Help</div>
+        <div class="invalid-feedback"
+                id="Error_@Model.GetInputId()"></div>
+    </div>
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+                document.getElementById('@(Model.GetInputId())').disabled = true;
+            </script>
+        }
+    </div>
+</incolumn>

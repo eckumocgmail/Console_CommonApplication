@@ -1,0 +1,34 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model FormField
+@inject MaterialIconsService icons
+
+<div class="input-group">
+    <div class="input-group-prepend">
+        <span class="input-group-text">
+            <i class="material-icons" id="display-icon">home</i>
+        </span>
+    </div>
+
+    <select class="form-control is-@Model.State" asp-for="Icon" onchange="document.getElementById('display-icon').innerHTML=event.target.value"
+            name="@Model.GetInputName()" id="@Model.GetInputId()">
+        @foreach (string icon in icons.GetIcons())
+        {
+            <option value="@icon">@icon</option>
+        }
+    </select>
+    <div class="text-info valid-feedback" style="display: block;"
+         id="Help_@Model.GetInputId()">@Model.Help</div>
+        <div class="invalid-feedback"
+             id="Error_@Model.GetInputId()"></div>
+
+    </div>
+
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+            document.getElementById('@(Model.GetInputId())').disabled = true;
+            </script>
+        }
+    </div>

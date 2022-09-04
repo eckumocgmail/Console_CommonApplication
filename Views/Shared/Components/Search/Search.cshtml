@@ -1,0 +1,50 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@model Search
+
+<div style="width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: baseline;">
+    <script>
+        function refreshOptions_@Model.GetContentPath()_(keywords) {
+            if (typeof (keywords) == 'string') {
+                keywords = JSON.parse(keywords);
+            }
+            console.log('keywords', keywords);
+            console.log('keywords.Result', keywords.Result);
+            const datalistid = 'search-options-@Model.GetContentPath()';
+            const container = document.getElementById(datalistid);
+
+            //удаление дочерних узлов
+            while (container.childNodes.length > 0)
+                container.removeChild(container.childNodes[0]);
+
+            for (let i = 0; i < keywords.Result.Keywords.length; i++) {
+                const keyword = keywords.Result.Keywords[i];
+                const option = document.createElement('option');
+                option.value = keyword;
+                option.innerHTML = keyword;
+                container.appendChild(option);
+            }
+        }
+
+
+
+    </script>
+    <input class="form-control" list="search-options-@Model.GetContentPath()"
+           oninput="event.preventDefault(); $app.$invoke.$method('@Model.GetContentPath()', 'OnInput', { query: event.target.value }).then(refreshOptions_@Model.GetContentPath()_)"
+           onchange="event.preventDefault(); $app.$invoke.$method('@Model.GetContentPath()', 'OnSearch', { query: event.target.value })"
+           datalist="search-options-@Model.GetContentPath()"
+           type="search"
+           placeholder="Поиск" aria-label="Search"
+           autofocus="true"
+           value="@Model.Query"
+           style="top: 0px; left: 0px; width: 100%; height: 22px;">
+
+    <button class="btn btn-primary my-2 my-sm-0" type="submit" ng-click="onClick()"> поиск </button>
+
+    <datalist id="search-options-@Model.GetContentPath()">
+    </datalist>
+</div>

@@ -1,0 +1,71 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+
+@model Tree
+
+@if (Model == null)
+{
+    <vc:nav-tree model="@NavigationSingleton.GetNavigationFor(ViewContext)"></vc:nav-tree>
+}
+else
+{
+    <div ng-init="pre=@Formating.ToJson(Model)"
+         id="tree-container-@Model.GetContentPath()"
+         ondragstart="event.dataTransfer.setData('text', event.target.id);"
+         oncontextmenu="event.preventDefault()"
+         draggable="true">
+
+        <div onmouseenter="if (document.getElementById('mdListId-@Model.GetContentPath()').classList.contains('expanded') == false) { event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetContentPath()', (resp) => { const e = document.getElementById('view-@Model.GetContentPath()'); e.innerHTML = resp; $app.$compile(e)($app.$scope); }) }"></div>
+        <div style="padding-left: 20px;" class="@(Model.Selected? "selected": "")"
+             id="tree-@Model.GetContentPath()"
+             ondragover="event.preventDefault()"
+             ondrop="event.preventDefault(); var data = event.dataTransfer.getData('text'); alert(data); const e = document.getElementById(data); if (!e) alert('Не найден перетаскиваемый узел'); event.target.appendChild(e);">
+            <div id="mdListId-@Model.GetContentPath()" ng-cloak
+                 class='@Model.GetOptionsClasses()' style="width: 280px;">
+                <div align="left"
+                     style="width: 100%; display: flex; flex-direction: row; flex-wrap: nowrap;"
+                     onclick="if(@Model.Selectable.ToString().ToLower()) post('/Tree/Select?id=@Model.GetContentPath()', (resp) => { const e = document.getElementById('view-@Model.GetContentPath()'); e.innerHTML=resp; $app.$compile(e)($app.$scope); })">
+
+                    @if (Model.Image != null)
+                    {
+                        <img src="@Model.Image" class="md-avatar" />
+                    }
+
+                    @if (Model.Checkable)
+                    {
+                        <md-checkbox class="md-primary"
+                                     ng-model="@Model.Checked"
+                                     onchange="post('/Tree/Check?id=@Model.GetContentPath()', (resp) => { const e = document.getElementById('view-@Model.GetContentPath()'); e.innerHTML=resp; $app.$compile(e)($app.$scope); })">
+                        </md-checkbox>
+                    }
+
+                    <label>@(Model.Item)</label>
+
+                    @if (Model.Children.Count() > 0)
+                    {
+                        @if (Model.Expanded)
+                        {
+                            <i class="material-icons md-secondary md-hue-3"
+                               style="justify-self: flex-end; margin-left: auto;"
+                               onclick="event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetContentPath()', (resp) => { const e = document.getElementById('view-@Model.GetContentPath()'); e.innerHTML = resp; $app.$compile(e)($app.$scope); })">expand_more</i>
+                        }
+                        else
+                        {
+
+                            <i class="material-icons md-secondary md-hue-3"
+                               style="justify-self: flex-end; margin-left: auto;"
+                               onclick="event.preventDefault(); event.stopPropagation(); post('/Tree/Expand?id=@Model.GetContentPath()', (resp) => { const e = document.getElementById('view-@Model.GetContentPath()'); e.innerHTML=resp; $app.$compile(e)($app.$scope); })">chevron_right</i>
+                        }
+                    }
+                </div>
+            </div>
+            @if (Model.Expanded)
+            {
+                @foreach (var pchild in Model.Children)
+                {
+                    <partial name="Container" model="pchild" />
+                }
+            }
+        </div>
+    </div>
+}

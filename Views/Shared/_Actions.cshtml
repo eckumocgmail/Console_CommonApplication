@@ -1,0 +1,209 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@if (HttpUtils.IsPartialRequest(ViewContext) == false)
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+        <!-- title -->
+        <title> @ViewData["Title"] </title>
+
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" onerror="alert('не загрузить '+this.href)" rel="stylesheet" />
+
+        <!-- google recaptcha -->
+        <script src="https://www.google.com/recaptcha/api.js" onerror="alert('не загрузить '+this.src)"></script>
+
+        <!-- bootstrap styles -->
+        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" onerror="alert('не загрузить '+this.href)" />
+
+        <!-- angular-material styles -->
+        <link rel="stylesheet" href="~/node_modules/angular-material/angular-material.min.css" onerror="alert(this.href)" />
+
+        <!-- application styles -->
+        <link rel="stylesheet" href="~/mvc/styles/card.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/form.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/pane.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/raiting.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/styles/site.css" onerror="alert('не загрузить '+this.href)" />
+
+        <!-- animations -->
+        <link rel="stylesheet" href="~/mvc/animations/fullsize.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/mvc/animations/highlight.css" onerror="alert('не загрузить '+this.href)" />
+
+        <!-- highcharts styles -->
+        <link rel="stylesheet" href="~/node_modules/highcharts/css/highcharts.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/node_modules/highcharts/css/themes/dark-unica.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/node_modules/highcharts/css/themes/grid-light.css" onerror="alert('не загрузить '+this.href)" />
+        <link rel="stylesheet" href="~/node_modules/highcharts/css/themes/sand-signika.css" onerror="alert('не загрузить '+this.href)" />
+
+
+        <!-- highcharts scripts -->
+        <script src="~/node_modules/highcharts/highcharts.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/node_modules/highcharts/highcharts-3d.js" onerror="alert('не загрузить '+this.src)"></script>
+        <script src="~/node_modules/highcharts/modules/sankey.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/node_modules/highcharts/modules/organization.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/node_modules/highcharts/modules/exporting.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+        <script src="~/node_modules/highcharts/modules/accessibility.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <!-- application -->
+        <script src="~/mvc/native.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+        <script src="~/mvc/http/activation-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/activation-key-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/admin-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/analitic-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/api-dataset-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+
+        <script src="~/mvc/http/array-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/authorization-api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/authorization-data-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/base-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/basic-authorization-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/common-database-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/create-department-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/create-employee-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/create-rate-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/create-staff-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/data-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/database-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/database-editor-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/departments-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/employee-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/employees-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/google-charts-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/help-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/highcharts-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/home-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/list-item-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/login-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/logout-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/managment-data-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/master-dialog-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/odbc-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/odbc-datasource-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/page-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/person-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/person-search-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/position-managment-api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/positions-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/properties-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/registration-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/resource-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/restore-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/routing-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/salary-report-api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/script-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/skills-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/staff-managment-api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/tariff-rate-managment-api-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/tele-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/text-search-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/user-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/validation-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/values-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/view-component-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/view-components-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+        <script src="~/mvc/http/view-controller.js" onerror="alert('не удалось загрузить'+this.src)"></script>
+
+
+        <script src="~/mvc/global-events.js" onerror="alert(this.src);"></script>
+    </head>
+    <body ng-app="YourApp">
+
+
+        <!-- Макет главной станице -->       
+        <div id="PageLayout" style="width: 100%; height: 100%; position: static;">
+
+
+
+
+            <div class='view' style="width: 100%; height: 100%; position: static;">
+
+                <!-- режиа анимации прогресса выполнения -->
+                <div id='when-progress' style="width: 100%; height: 100%; position: static;">
+
+
+                    <partial name="_Progress" />
+                </div>
+
+                <!-- режим ожидания действий со стороны пользователя-->
+                <div id='when-wait' style="width: 100%; height: 100%; position: static;">
+
+
+                    <div ng-controller="YourController"
+                         style="width: 100%; overflow-y:  visible: hidden; auto; height: 100%; display: flex; flex-direction: row; flex-wrap: nowrap;">
+                        <div id="sideLeft"
+                             class="front-pane init"
+                             onmouseleave="this.dispatchEvent(new MessageEvent('side'));"
+                             style="overflow-y: auto; word-break: break-word; width: 420px; height: 100%; display: flex; flex-direction: column; display: none;">
+
+                            <partial name="_AreaNavigation" />
+
+
+
+
+
+
+                        </div>
+                        <div style="overflow-y: auto; width: 100%; height: 100%; display: flex; flex-direction: column; flex-wrap: nowrap;">
+                            <div style="overflow-y: auto; padding: 5px; width: 100%; height: 100%; display: flex; flex-direction: column; flex-wrap: nowrap; ">
+                                <div style="width: 100%; ">
+                                    <partial name="_Navigation" />
+
+                                </div>
+                                <div style="width: 100%; height: 100%;">
+                                    @RenderBody()
+                                </div>
+                                <div style="width: 100%; padding: 5px;">
+                                    @DateTime.Now.Year
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- signalr -->
+            <script src="~/node_modules/microsoft/signalr/dist/browser/signalr.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+            <!-- jquery -->
+            <script src="~/node_modules/jquery/dist/jquery.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/node_modules/jquery-validation/dist/jquery.validate.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/node_modules/jquery-validation/dist/additional-methods.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+            <!-- bootstrap -->
+            <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+            <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" onerror="alert('Не удалось загрузить '+this.src);"></script>
+
+            <!-- angularjs -->
+            <script src="~/node_modules/angular/angular.min.js" onerror="alert(this.src);"></script>
+            <script src="~/node_modules/angular-animate/angular-animate.min.js" onerror="alert(this.src);"></script>
+            <script src="~/node_modules/angular-aria/angular-aria.min.js" onerror="alert(this.src);"></script>
+            <script src="~/node_modules/angular-messages/angular-messages.min.js" onerror="alert(this.src);"></script>
+            <script src="~/node_modules/angular-material/angular-material.min.js" onerror="alert(this.src);"></script>
+            <script src="~/node_modules/angular-material/angular-material-mocks.js" onerror="alert(this.src);"></script>
+            <script src="~/mvc/app.component.js" onerror="alert(this.src);"></script>
+            <script src="~/mvc/app-client.service.js" onerror="alert(this.src);"></script>
+            <script src="~/mvc/site.js" onerror="alert(this.src);"></script>
+
+
+            @await RenderSectionAsync("Scripts", required: false)
+        </div>
+    </body>
+    </html>
+}
+else
+{
+    @RenderBody()
+}
+

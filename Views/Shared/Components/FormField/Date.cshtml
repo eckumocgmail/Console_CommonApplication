@@ -1,0 +1,58 @@
+﻿@model FormField
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AngularApplication
+@{ 
+    string year = "XXXX";
+    string month = "XX";
+    string day = "XX";
+    if (Model.Value != null)
+    {
+        System.DateTime? dateNullable = null;
+        if (Model.Value is System.DateTime)
+        {
+            dateNullable = (System.DateTime)Model.Value;
+        }
+        else
+        {
+            dateNullable = Model.Value.ToString().ToDate();
+        }
+        if(dateNullable == null)
+        {
+            throw new Exception("Значение DateTime не получено в итоге");
+        }
+        System.DateTime date = (System.DateTime)dateNullable;
+        year = date.Year.ToString();
+        month = (date.Month >= 10) ? date.Month.ToString() : ("0" + date.Month.ToString());
+        day = (date.Day >= 10) ? date.Day.ToString() : ("0" + date.Day.ToString());
+    }
+}
+<incolumn>
+    <inline>
+        <div class="input-group mb-3"
+             id="field-container-@Model.GetInputId()">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="@Model.GetInputName()">
+                    <i class="material-icons">@Model.Icon</i>
+                </label>
+            </div>
+            <input class="form-control is-@Model.State"
+                   type="date"
+                   style="height: 38px;"
+                   value="@year-@month-@day"
+                   name="@Model.GetInputName()"
+                   id="@Model.GetInputId()" />
+            <div class="text-info valid-feedback" style="display: block;"
+                 id="Help_@Model.GetInputId()">@Model.Help</div>
+                <div class="invalid-feedback"
+                     id="Error_@Model.GetInputId()"></div>
+            </div>
+    </inline>
+    <div>
+        @if (Model.Edited == false)
+        {
+            <script>
+                document.getElementById('@(Model.GetInputId())').disabled = true;
+            </script>
+        }
+    </div>
+</incolumn>

@@ -1,0 +1,46 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MVC
+@{
+    ViewData["Title"] = "Активация учетной записи";
+}
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@model ActivationModel
+
+@inject APIAuthorization aut
+<div style="padding: 20px;">
+    <form class="front-pane init"
+          asp-antiforgery="true" 
+          method="Post" 
+   
+          asp-controller="Activation" 
+          asp-area="">
+        <h2> Активация учетной записи </h2>
+        <div class="validation"> Учетная запись не активирована </div><hr />
+        <input type="hidden" id="Email" name="Email" value="@Model.Email" />
+        @if (Model.Message != null)
+        {
+            <div class="alert-info" style="padding: 25px;">@Model.Message</div>
+        }
+
+        <!-- Email -->
+        <label asp-for="ActivationKey" id="ActivationKeyLabel"></label>
+        <div class="input-group">
+            <input asp-for="ActivationKey"
+                    class="form-control"
+                    name="ActivationKey"
+                    value="@(auth.IsSignin()?auth.Verify().Account.ActivationKey:"")"
+                    id="ActivationKey">
+
+        </div>
+        <div>
+            <span class="text-danger" asp-validation-for="ActivationKey"></span>
+        </div><br />
+        @inject APIAuthorization auth
+        <div><a href="https:/@(auth.IsSignin()? auth.Verify().Account.Email.Substring(auth.Verify().Account.Email.IndexOf("@")+1):"")">Посмотреть почтовый ящик</a></div>
+        
+        <button class="btn btn-primary" type="submit"> выполнить активацию </button>
+    </form>
+</div>

@@ -1,0 +1,27 @@
+﻿@page
+@model AngularApplication.Pages.RestoreModel
+@{
+}
+<form onchange="console.log(document.forms[0]);">
+    <div class="form-group">
+        <label> Контроллер </label>
+        <select class="form-control" asp-for="Controller">
+            @foreach(string controller in @Model.Controllers.Keys)
+            {
+                <option value="@(controller)">@(controller)</option>
+            }
+        </select>
+    </div>
+    @if( Model.Controller != null)
+    {
+        <div class="form-group">
+            <label> Операция </label>
+            <select class="form-control" asp-for="Action">
+                @foreach(string action in @Model.Controllers[Model.Controller])
+                {
+                    <option value="@(action)">@(action)</option>
+                }
+            </select>
+        </div>
+    }
+</form>
